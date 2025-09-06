@@ -1,52 +1,42 @@
 import sys
-from random import choice # importing choice to randomly select a window title
 
-from PySide6.QtCore import QSize # Importing QSize to set a fixed size on our window
+from PySide6.QtCore import QSize
 from PySide6.QtWidgets import (
     QApplication,
     QMainWindow,
-    QPushButton
+    QLabel,
+    QLineEdit,
+    QVBoxLayout,
+    QWidget
 )
-
-# List of possible window titles
-possible_window_titles = [
-    "Title 1",
-    "Title 2",
-    "Title 3",
-    "Title 4",
-    "Title 5",
-    "Error"
-]
 
 # Subclass of QMainWindow to customize the main window
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        
-        self.setWindowTitle("Main Window")
+        self.setMinimumSize(QSize(400, 300))
+        self.setWindowTitle("Line edits and Labels")
 
-        self.button_main = QPushButton("Main Button")
-        self.button_main.clicked.connect(self.button_was_clicked)
-        self.windowTitleChanged.connect(self.window_title_changed) # Add a signal for when the window title changes
+        # Create a label
+        self.label = QLabel()
 
-        self.setCentralWidget(self.button_main)
+        # Create an input QLineEdit
+        self.input = QLineEdit()
+        # When the QLineEdit is edited, and the signal is triggered, update the label text
+        self.input.textChanged.connect(self.label.setText)
 
-    def button_was_clicked(self):
-        print("Button was clicked")
-        # When the button is clicked, select a new window title at random from the list
-        new_window_title = choice(possible_window_titles)
-        print(f"Setting new window title: {new_window_title}")
-        # Set the new window title
-        self.setWindowTitle(new_window_title)
+        # Create a layout to hold all the components
+        layout = QVBoxLayout()
+        layout.addWidget(self.input)
+        layout.addWidget(self.label)
 
-    def window_title_changed(self, window_title):
-        print(f"Window title has changed to {window_title}")
-        # check if the window title was changed to "Error"
-        if window_title == "Error":
-            print("Ran into an error, disabling the button")
-            # Disable the button if the new title is "Error"
-            self.button_main.setEnabled(False)
-        
+        # Create a container to contain the layout
+        container = QWidget()
+        # Set the layout of the container to the QWidget container we just created
+        container.setLayout(layout)
+
+        # Set the container as the central widget
+        self.setCentralWidget(container)
 
 
 app = QApplication(sys.argv)
