@@ -1,5 +1,4 @@
 import sys
-from random import choice
 
 from PySide6.QtCore import QSize # Importing QSize to set a fixed size on our window
 from PySide6.QtWidgets import (
