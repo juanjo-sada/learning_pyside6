@@ -18,13 +18,13 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setMinimumSize(QSize(400, 300))
-        self.setWindowTitle("Template")
+        self.setWindowTitle("Bird picture")
 
-        pictures_dir = os.path.join(os.path.dirname(basedir))
-        picture_dir = os.path.join(pictures_dir, "bird.jpg")
+        bird_path = os.path.join(os.path.dirname(basedir), "pictures", "bird.jpg")
 
         widget = QLabel()
-        widget.setPixmap(QPixmap(os.path.join(os.path.dirname(basedir), "pictures", "bird.jpg")))
+        widget.setPixmap(QPixmap(bird_path)) # Set the label to a Pixelmap (the picture)
+        widget.setScaledContents(True) # Allow for the contents to be scaled when resizing the window
 
         self.setCentralWidget(widget)
 
