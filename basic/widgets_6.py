@@ -12,10 +12,10 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setMinimumSize(QSize(400, 300))
-        self.setWindowTitle("Line Edit")
+        self.setWindowTitle("Line Edit") # Add new line edit widget
 
         self.line_edit = QLineEdit()
-        self.line_edit.setMaxLength(10)
+        self.line_edit.setMaxLength(10) # Set a max length of 10
         self.line_edit.setPlaceholderText("Write your input here")
 
         self.line_edit.returnPressed.connect(self.return_pressed)
