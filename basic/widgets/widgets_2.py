@@ -9,7 +9,7 @@ from PySide6.QtWidgets import (
     QLabel,
 )
 
-basedir = os.path.dirname(__file__)
+basedir = os.path.dirname(os.path.dirname(__file__))
 print(f"Current working folder: {os.getcwd()}")
 print(f"Paths are relative to: {basedir}")
 
