@@ -9,7 +9,7 @@ from PySide6.QtWidgets import (
     QLabel,
 )
 
-basedir = os.path.dirname(os.path.dirname(__file__))
+basedir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 print(f"Current working folder: {os.getcwd()}")
 print(f"Paths are relative to: {basedir}")
 
@@ -20,7 +20,7 @@ class MainWindow(QMainWindow):
         self.setMinimumSize(QSize(400, 300))
         self.setWindowTitle("Bird picture")
 
-        bird_path = os.path.join(os.path.dirname(basedir), "pictures", "bird.jpg")
+        bird_path = os.path.join(basedir, "pictures", "bird.jpg")
 
         widget = QLabel()
         widget.setPixmap(QPixmap(bird_path)) # Set the label to a Pixelmap (the picture)
