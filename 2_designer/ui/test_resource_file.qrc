@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="gui">
+    <file>gui_3.ui</file>
+  </qresource>
+  <qresource prefix="icons">
+    <file>icons/bug.png</file>
+    <file>icons/car-red.png</file>
+  </qresource>
+</RCC>
