@@ -12,7 +12,7 @@ tick = QImage(os.path.join(basedir, "icons", "tick.png"))
 
 class TodoModel(QAbstractListModel):
     def __init__(self, *args, todos=None, **kwargs):
-        super(TodoModel, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.todos = todos if todos else []
     
     def data(self, index, role):
