@@ -7,7 +7,7 @@ from PySide6.QtGui import QImage
 
 from ui.MainWindow import Ui_MainWindow
 
-basedir = os.path.dirname(os.path.dirname(__file__))
+basedir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
 tick = QImage(os.path.join(basedir, "icons", "tick.png"))
 

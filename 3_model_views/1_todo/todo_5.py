@@ -6,7 +6,7 @@ from PySide6.QtGui import QImage
 
 from ui.MainWindow import Ui_MainWindow
 
-basedir = os.path.dirname(os.path.dirname(__file__))
+basedir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
 tick = QImage(os.path.join(basedir, "icons", "tick.png"))
 
@@ -91,9 +91,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             index = indexes[0]
             row = index.row()
             status, text = self.model.todos[row]
-            print(self.model.todos[row])
             self.model.todos[row] = (True, text)
-            print(self.model.todos[row])
 
             # Because the shape of the data hasn't changed, we use .dataChanged.emit() instead
             # this takes the top left and bottom right as parameters, in this case it's the same
