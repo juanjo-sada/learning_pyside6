@@ -3,28 +3,37 @@ from datetime import datetime
 from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import Qt
 
-# Set the basedir
 basedir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+print(basedir)
 
 class TableModel(QtCore.QAbstractTableModel):
     def __init__(self, data):
         super().__init__()
         self._data = data
+        self.COLORS = ['#053061', '#2166ac', '#4393c3', '#92c5de', '#d1e5f0', '#f7f7f7', '#fddbc7', '#f4a582', '#d6604d', '#b2182b', '#67001f']
 
     def data(self, index, role):
-        # Set the Decoration Role
         if role == Qt.DecorationRole:
             value = self._data[index.row()][index.column()]
             if isinstance(value, bool):
-                # If true, use tick icon
                 if value:
                     return QtGui.QIcon(os.path.join(basedir, "icons", "tick.png"))
-                # Else, use cross icon
                 return QtGui.QIcon(os.path.join(basedir, "icons", "cross.png"))
             
             if isinstance(value, datetime):
-                # If it's a date, set calendar icon
                 return QtGui.QIcon(os.path.join(basedir, "icons", "calendar.png"))
+
+            # Add color gradient change into Qt.DecorationRole instead of Qt.BackgroundRole this time
+            if isinstance(value, int) or isinstance(value, float):
+                value = int(value)
+
+                # Limit to range -5 and +5, then convert to 0...10
+                value = max(value, -5) # Values < -5 become -5
+                value = min(value, 5) # Values > 5 become 5
+
+                value = value + 5 # -5 becomes 0, 5 becomes 10
+
+                return QtGui.QColor(self.COLORS[value])
 
         if role == Qt.TextAlignmentRole:
             value = self._data[index.row()][index.column()]
@@ -58,7 +67,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.table = QtWidgets.QTableView()
 
-        # Change some values to True, False and datetime to test new changes
+        # Change some values in 3rd column to negative to test
         data = [
             [True, 1, 2, 3],
             [4, 5, False, 7],
