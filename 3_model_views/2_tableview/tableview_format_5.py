@@ -24,7 +24,6 @@ class TableModel(QtCore.QAbstractTableModel):
                 value = value + 5 # -5 becomes 0, 5 becomes 10
 
                 return QtGui.QColor(self.COLORS[value])
-            
 
         if role == Qt.TextAlignmentRole:
             value = self._data[index.row()][index.column()]
