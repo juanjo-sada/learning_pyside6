@@ -1,0 +1,75 @@
+import sys, os
+from datetime import datetime
+from PySide6 import QtCore, QtGui, QtWidgets
+from PySide6.QtCore import Qt
+
+basedir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+print(basedir)
+
+class TableModel(QtCore.QAbstractTableModel):
+    def __init__(self, data):
+        super().__init__()
+        self._data = data
+        self.COLORS = ['#053061', '#2166ac', '#4393c3', '#92c5de', '#d1e5f0', '#f7f7f7', '#fddbc7', '#f4a582', '#d6604d', '#b2182b', '#67001f']
+
+    def data(self, index, role):
+        if role == Qt.DecorationRole:
+            value = self._data[index.row()][index.column()]
+            if isinstance(value, bool):
+                if value:
+                    return QtGui.QIcon(os.path.join(basedir, "icons", "tick.png"))
+                return QtGui.QIcon(os.path.join(basedir, "icons", "cross.png"))
+            
+            if isinstance(value, datetime):
+                return QtGui.QIcon(os.path.join(basedir, "icons", "calendar.png"))
+
+        if role == Qt.TextAlignmentRole:
+            value = self._data[index.row()][index.column()]
+            if isinstance(value, int) or isinstance(value, float):
+                return Qt.AlignVCenter | Qt.AlignRight
+        
+        if role == Qt.DisplayRole:
+            value = self._data[index.row()][index.column()]
+            
+            if isinstance(value, datetime):
+                return value.strftime(format="%Y-%m-%d")
+            
+            if isinstance(value, float):
+                return "%.2f" % value
+
+            if isinstance(value, str):
+                return '"%s"' % value
+            
+            return value
+
+    def rowCount(self, index):
+        return len(self._data)
+
+    def columnCount(self, index):
+        return len(self._data[0])
+    
+
+class MainWindow(QtWidgets.QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.table = QtWidgets.QTableView()
+
+        # Change some values in 3rd column to negative to test
+        data = [
+            [True, 1, 2, 3],
+            [4, 5, False, 7],
+            [8, datetime(year=2005, month=10, day=15), 10, 11]
+        ]
+
+        self.model = TableModel(data)
+
+        self.table.setModel(self.model)
+
+        self.setCentralWidget(self.table)
+
+
+app = QtWidgets.QApplication()
+window = MainWindow()
+window.show()
+app.exec()
