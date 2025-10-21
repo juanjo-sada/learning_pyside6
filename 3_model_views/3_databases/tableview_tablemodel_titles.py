@@ -23,9 +23,6 @@ class MainWindow(QMainWindow):
 
         self.model.setTable("Track")
 
-        index = self.model.fieldIndex("Milliseconds")
-        self.model.setSort(index, Qt.DescendingOrder)
-
         # You can change the header names
         # Use the index, Qt.Horizontal to refer to a top header (column), and the new label
         self.model.setHeaderData(2, Qt.Horizontal, "Album (ID)")
@@ -33,8 +30,6 @@ class MainWindow(QMainWindow):
         self.model.setHeaderData(4, Qt.Horizontal, "Genre (ID)")
 
         self.model.select()
-
-        self.model.setEditStrategy(QSqlTableModel.OnRowChange)
 
         self.setMinimumSize(QSize(1024, 600))
         self.setCentralWidget(self.table)
