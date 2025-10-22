@@ -62,7 +62,7 @@ class MainWindow(QMainWindow):
         - Applies a filter where the 'Name' column contains the text values
         """
         text = self.edit.text()
-        clean_text = re.sub("[\W_]+", '', text)
+        clean_text = re.sub(r"[\W_]+", '', text)
         filter_str = 'Name LIKE "%{}%"'.format(clean_text)
         self.model.setFilter(filter_str)
 
