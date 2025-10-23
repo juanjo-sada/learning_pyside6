@@ -33,6 +33,7 @@ class MainWindow(QMainWindow):
         )
 
         # We can use a relational delegate to show a QComboBox of the items in the related table
+        # This allows us to actually modify items in the table from foreign keys
         delegate = QSqlRelationalDelegate(self.table)
         self.table.setItemDelegate(delegate)
         
